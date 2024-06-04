@@ -1,4 +1,5 @@
-﻿using DotnetGeminiSDK.Model.Response;
+﻿using System.Windows.Input;
+using DotnetGeminiSDK.Model.Response;
 using Newtonsoft.Json.Linq;
 
 namespace KaiSeki;
@@ -24,18 +25,43 @@ public partial class MainPage : ContentPage
     {
         Console.WriteLine("MainPage_Loaded");
     }
+    
+    //return
+    // private ICommand ReturnCommand => new Command(OnButtonClicked);
 
     private async void OnButtonClicked(object sender, EventArgs e)
     {
-        Button.IsEnabled = false;
-        if(SentenceEntry.Text == null || SentenceEntry.Text == "")
+        //hide button
+        // Button.IsVisible = false;
+        
+        if(SentenceEntry.Text == "")
         {
             SentenceEntry.Text = "面倒事が嫌いだから逆らいはしないものの、トワ自身は生活を改める気など全くなかった。";
         }
-        string prompt = $"对于‘{SentenceEntry.Text}’这个日语句子，请用平假名注音汉字，并用中文分析除了助词和名字以外的每个单词的语法，最后整句翻译。";
-       
+        
+        SmallLabel.Text = SentenceEntry.Text;
+        
         try{
-            string result = await _Gemini.PromptText(prompt);
+            string result = await _Gemini.PromptText(SentenceEntry.Text);
+            SmallLabel.Text = result;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+
+    private async void OnEntryCompleted(object? sender, EventArgs e)
+    {
+        if(SentenceEntry.Text == "" || SentenceEntry.Text == null)
+        {
+            SentenceEntry.Text = "面倒事が嫌いだから逆らいはしないものの、トワ自身は生活を改める気など全くなかった。";
+        }
+        
+        SmallLabel.Text = "Analyzing...";
+        
+        try{
+            string result = await _Gemini.PromptText(SentenceEntry.Text);
             SmallLabel.Text = result;
         }
         catch (Exception ex)

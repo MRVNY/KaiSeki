@@ -5,7 +5,7 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
-
-        MainPage = new AppShell();
+        new WordList();
+        MainPage = new NavigationPage(new AppShell());
     }
 }

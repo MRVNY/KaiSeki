@@ -6,29 +6,32 @@
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+            Padding="30,30"
+            VerticalOptions="Start">
 
-             <Label
-                Text="Input the Japanese sentence you wish to analyse"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+             <!-- <Label -->
+             <!--    Text="Input the Japanese sentence you wish to analyse" -->
+             <!--    SemanticProperties.HeadingLevel="Level1" -->
+             <!--    FontSize="20" -->
+             <!--    HorizontalOptions="Center" /> -->
 
             <Entry
                 x:Name="SentenceEntry"
-                Placeholder="面倒事が嫌いだから逆らいはしないものの、トワ自身は生活を改める気など全くなかった。"
-                HorizontalOptions="Center"/>
+                Placeholder="Input Japanese sentence"
+                WidthRequest="300"
+                HorizontalOptions="Center"
+                ReturnType="Send"
+                Completed="OnEntryCompleted" />
 
-            <Button
-                x:Name="Button"
-                Text="Click Me!"
-                SemanticProperties.Hint="Gets restaurant recommendations when you click"
-                Clicked="OnButtonClicked"
-                HorizontalOptions="Center" />
+            <!-- <Button -->
+            <!--     x:Name="Button" -->
+            <!--     Text="Analyze" -->
+            <!--     SemanticProperties.Hint="Gets restaurant recommendations when you click" -->
+            <!--     Clicked="OnButtonClicked" -->
+            <!--     HorizontalOptions="Center" /> -->
 
             <Label x:Name="SmallLabel"
-                   Text="面倒事が嫌いだから逆らいはしないものの、トワ自身は生活を改める気など全くなかった。"
+                   Text=""
                    SemanticProperties.HeadingLevel="Level2"
                    FontSize="18"
                    HorizontalOptions="Center" />

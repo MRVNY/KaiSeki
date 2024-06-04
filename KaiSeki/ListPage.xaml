@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KaiSeki.ListPage">
+
+    <ListView 
+        x:Name="list" 
+        ItemsSource="{Binding Word}" 
+        SelectionMode="None"
+        ItemTapped="List_OnItemTapped"
+        IsPullToRefreshEnabled="True"
+        Refreshing="List_OnRefreshing"
+        RowHeight="50">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <TextCell Text="{Binding Kanji}"
+                          Detail="{Binding Hiragana}"/>
+            </DataTemplate>
+            
+        </ListView.ItemTemplate>
+    </ListView>
+
+</ContentPage>
+

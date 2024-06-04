@@ -39,14 +39,21 @@ public class Gemini
 
     public async Task<string> PromptText(string text)
     {
-        GeminiMessageResponse response = await _geminiClient.TextPrompt(text);
+        // string prompt = $"对于‘{text}’这个日语句子，请用平假名注音汉字，并用中文分析除了助词和名字以外的每个单词的语法，最后整句翻译。";
+        string prompt = $"Could you translate this Japanese sentence and then apply furigana to the kanji, and then parse and analyse the grammar of every word? Just plain text. No markdown format. No markdown format: \"{text}\" No markdown format";
+        
+        GeminiMessageResponse response = await _geminiClient.TextPrompt(prompt);
 
         if (response == null)
         {
             throw new Exception("PromptText failed to receive a response from Gemini service."); // Or handle as needed for UI
         }
+        
+        string result = response.Candidates[0].Content.Parts[0].Text;
+        
+        WordList.Instance.Words.Insert(0,new Word{Hiragana = "ひらがな", Kanji = text, Romanji = "Romanji", Gemini = result});
 
-        return response.Candidates[0].Content.Parts[0].Text;
+        return result;
 
     }
 
