@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KaiSeki.AnalyzerPage">
+    
+    <Grid
+        x:Name="Container"
+        HorizontalOptions="Fill"
+        RowSpacing="5"
+        Padding="0,0"
+        Margin="0"
+        RowDefinitions="Auto,*"
+        ColumnDefinitions="*,4*">
+        
+            <Entry
+                Grid.ColumnSpan="2"
+                Grid.Column="0"
+                x:Name="SentenceEntry"
+                Placeholder="Input Japanese sentence"
+                HorizontalOptions="Fill"
+                Margin="5,0"
+                ReturnType="Send"
+                Completed="OnEntryCompleted" />
+            
+            <!-- -->
+            <!-- <Label x:Name="SmallLabel" -->
+            <!--        SemanticProperties.HeadingLevel="Level2" -->
+            <!--        FontSize="18" -->
+            <!--        HorizontalOptions="Center" -->
+            <!--        IsVisible="False"/> -->
+             
+            <ScrollView Grid.Row="1" Grid.Column="0">
+                <VerticalStackLayout
+                    x:Name="SentencePanel">
+                        <VerticalStackLayout
+                            BackgroundColor="#DFD8F7">
+                            <Label 
+                                VerticalTextAlignment="End" 
+                                WidthRequest="50"
+                                HeightRequest="1000">
+                            </Label>
+                        </VerticalStackLayout>
+                </VerticalStackLayout>
+            </ScrollView>
+                
+            <ScrollView Grid.Row="1" Grid.Column="1">
+                <VerticalStackLayout
+                    x:Name="InfoPanel"
+                    Padding="0,0,0,0"
+                    >
+                        <Label
+                            HeightRequest="1000"
+                            VerticalOptions="End"
+                        ></Label>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+
+</ContentPage>
+

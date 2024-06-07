@@ -1,0 +1,140 @@
+//Translate the given Japanese sentence and then apply furigana to all the kanji, and then parse and analyze the grammar of every word? Just plain text.
+//No descriptions and explanations. Return only raw JSON object without markdown. No markdown format.
+[
+    {
+        "translation": "Although she dislikes troublesome matters and therefore doesn't resist, Toa herself had absolutely no intention of reforming her life.",
+        "furigana": "めんどうごとが きらいだから さからいは しないものの、とわ じしんは せいかつを あらためる き など ぜんぜん なかった。",
+        "grammar": [
+            {
+                "word": "面倒ごと",
+                "reading": "めんどうごと",
+                "pos": "noun",
+                "grammar": ""
+            },
+            {
+                "word": "が",
+                "reading": "が",
+                "pos": "particle",
+                "grammar": ""
+            },
+            {
+                "word": "嫌い",
+                "reading": "きらい",
+                "pos": "adjective",
+                "grammar": ""
+            },
+            {
+                "word": "だから",
+                "reading": "だから",
+                "pos": "conjunction",
+                "grammar": ""
+            },
+            {
+                "word": "逆らい",
+                "reading": "さからい",
+                "pos": "noun",
+                "grammar": ""
+            },
+            {
+                "word": "は",
+                "reading": "は",
+                "pos": "particle",
+                "grammar": ""
+            },
+            {
+                "word": "しない",
+                "reading": "しない",
+                "pos": "verb",
+                "grammar": "negative, present, plain"
+            },
+            {
+                "word": "ものの",
+                "reading": "ものの",
+                "pos": "conjunction",
+                "grammar": ""
+            },
+            {
+                "word": "トワ",
+                "reading": "とわ",
+                "pos": "noun",
+                "grammar": ""
+            },
+            {
+                "word": "自身",
+                "reading": "じしん",
+                "pos": "noun",
+                "grammar": ""
+            },
+            {
+                "word": "は",
+                "reading": "は",
+                "pos": "particle",
+                "grammar": ""
+            },
+            {
+                "word": "生活",
+                "reading": "せいかつ",
+                "pos": "noun",
+                "grammar": ""
+            },
+            {
+                "word": "を",
+                "reading": "を",
+                "pos": "particle",
+                "grammar": ""
+            },
+            {
+                "word": "改める",
+                "reading": "あらためる",
+                "pos": "verb",
+                "grammar": ""
+            },
+            {
+                "word": "気",
+                "reading": "き",
+                "pos": "noun",
+                "grammar": ""
+            },
+            {
+                "word": "など",
+                "reading": "など",
+                "pos": "particle",
+                "grammar": ""
+            },
+            {
+                "word": "全然",
+                "reading": "ぜんぜん",
+                "pos": "adverb",
+                "grammar": ""
+            },
+            {
+                "word": "なかった",
+                "reading": "なかった",
+                "pos": "verb",
+                "grammar": "negative, past, plain"
+            }
+        ]
+    },
+    //Translate the given Japanese sentence and then apply furigana to all the kanji, and then parse and analyze the grammar of every word? Just plain text.
+    //No descriptions and explanations. Return only raw JSON object without markdown. No markdown format.
+    //[Structure of the JSON object]
+{
+    "<original Japanese sentence>": {
+        "translation": "<translation of the sentence>",
+        "phrases": {
+                "<phrase1>": {
+                    "translation": "<translation of the phrase>",
+                    "grammar": "<grammar of the phrase>",
+                    "words":{
+                        "<word1>":{
+                            "definition": "<definition of the word>", "furigana": "<pronunciation of the word>", "original_form": "<original form of the word>", "type": "<type of the word (verb, noun, etc.)>", "grammar": "<what form it is, function of the word in the sentence, explanation of the informal form, etc.>"
+                        },
+                        "<word2>": {...}
+                    }
+                },
+                "<phrase2>": {...}
+        },
+        "grammar": "<complete grammar analysis of the sentence, taking account the structure and context>"
+    }
+}
+]

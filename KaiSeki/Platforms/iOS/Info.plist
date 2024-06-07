@@ -30,7 +30,9 @@
 	<string></string>
 	<key>CFBundleIdentifier</key>
 	<string>MRVN.KaiSeki</string>
-	<key></key>
-	<string></string>
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 </dict>
 </plist>

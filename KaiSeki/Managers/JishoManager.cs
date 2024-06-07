@@ -1,12 +1,12 @@
 using JishoNET.Models;
 
-namespace Untitled_Japanese_App;
+namespace KaiSeki;
 
-public class Jisho
+public class JishoManager
 {
     private JishoClient client;
     
-    public Jisho()
+    public JishoManager()
     {
         client = new JishoClient();
     }

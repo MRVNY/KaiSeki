@@ -9,7 +9,7 @@ public partial class ListPage : ContentPage
     public ListPage()
     {
         InitializeComponent();
-        list.ItemsSource = WordList.Instance.Words;
+        list.ItemsSource = WordManager.Instance.Words;
     }
 
     private void List_OnItemTapped(object? sender, ItemTappedEventArgs e)
@@ -24,7 +24,7 @@ public partial class ListPage : ContentPage
 
     private void List_OnRefreshing(object? sender, EventArgs e)
     {
-        list.ItemsSource = WordList.Instance.Words;
+        list.ItemsSource = WordManager.Instance.Words;
     }
 }
 

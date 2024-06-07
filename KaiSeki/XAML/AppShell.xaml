@@ -17,7 +17,7 @@
         <Tab Title="Analyzer" Icon="ka.png">
             <ShellContent
                 Title="Analyzer"
-                ContentTemplate="{DataTemplate local:MainPage}"
+                ContentTemplate="{DataTemplate local:AnalyzerPage}"
                 Route="MainPage" />
             <!-- <ShellContent ContentTemplate="{DataTemplate views:CatsPage}" /> -->
         </Tab>

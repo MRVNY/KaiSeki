@@ -24,7 +24,7 @@
         <ApplicationTitle>KaiSeki</ApplicationTitle>
 
         <!-- App Identifier -->
-        <ApplicationId>com.companyname.kaiseki</ApplicationId>
+        <ApplicationId>MRVN.KaiSeki</ApplicationId>
 
         <!-- Versions -->
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -62,13 +62,16 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
+        <PackageReference Include="CommunityToolkit.Maui.Core" Version="9.0.0" />
         <PackageReference Include="DotnetGeminiSDK" Version="1.0.14" />
         <PackageReference Include="JishoNET" Version="1.3.1" />
         <PackageReference Include="JishoNET.Kanji" Version="1.0.2" />
-        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)"/>
-        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0"/>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
+        <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
+        <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     </ItemGroup>
     
     <ItemGroup>
@@ -76,55 +79,51 @@
     </ItemGroup>
     
     <ItemGroup>
+      <MauiXaml Update="XAML\AppShell.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="XAML\ListPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="XAML\AnalyzerPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="XAML\StudyPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="XAML\WordPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
       <MauiXaml Update="App.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
-      <MauiXaml Update="AppShell.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
-      <MauiXaml Update="ListPage.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
-      <MauiXaml Update="MainPage.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
-      <MauiXaml Update="StudyPage.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
-      <MauiXaml Update="WordPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
     </ItemGroup>
     
     <ItemGroup>
+      <Compile Update="XAML\AppShell.xaml.cs">
+        <DependentUpon>AppShell.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="XAML\ListPage.xaml.cs">
+        <DependentUpon>ListPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="XAML\AnalyzerPage.xaml.cs">
+        <DependentUpon>MainPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="XAML\StudyPage.xaml.cs">
+        <DependentUpon>StudyPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="XAML\WordPage.xaml.cs">
+        <DependentUpon>WordPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
       <Compile Update="App.xaml.cs">
         <DependentUpon>App.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="AppShell.xaml.cs">
-        <DependentUpon>AppShell.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="ListPage.xaml.cs">
-        <DependentUpon>ListPage.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="MainPage.xaml.cs">
-        <DependentUpon>MainPage.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="StudyPage.xaml.cs">
-        <DependentUpon>StudyPage.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="WordPage.xaml.cs">
-        <DependentUpon>WordPage.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="XAML\" />
     </ItemGroup>
 
 
