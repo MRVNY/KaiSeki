@@ -9,8 +9,8 @@
         RowSpacing="5"
         Padding="0,0"
         Margin="0"
-        RowDefinitions="Auto,*"
-        ColumnDefinitions="*,4*">
+        RowDefinitions="Auto,Auto,*"
+        ColumnDefinitions="*,5*">
         
             <Entry
                 Grid.ColumnSpan="2"
@@ -22,36 +22,38 @@
                 ReturnType="Send"
                 Completed="OnEntryCompleted" />
             
-            <!-- -->
-            <!-- <Label x:Name="SmallLabel" -->
-            <!--        SemanticProperties.HeadingLevel="Level2" -->
-            <!--        FontSize="18" -->
-            <!--        HorizontalOptions="Center" -->
-            <!--        IsVisible="False"/> -->
+            <ScrollView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="LabelScroll">
+            <Label x:Name="SmallLabel"
+                   SemanticProperties.HeadingLevel="Level2"
+                   FontSize="18"
+                   HorizontalOptions="Center"
+                   Text="Analyzing..."
+                   IsVisible="False"/>
+            </ScrollView>
              
-            <ScrollView Grid.Row="1" Grid.Column="0">
+            <ScrollView Grid.Row="2" Grid.Column="0">
                 <VerticalStackLayout
                     x:Name="SentencePanel">
                         <VerticalStackLayout
                             BackgroundColor="#DFD8F7">
-                            <Label 
-                                VerticalTextAlignment="End" 
-                                WidthRequest="50"
-                                HeightRequest="1000">
-                            </Label>
+                            <!-- <Label  -->
+                            <!--     VerticalTextAlignment="End"  -->
+                            <!--     WidthRequest="50" -->
+                            <!--     HeightRequest="1000"> -->
+                            <!-- </Label> -->
                         </VerticalStackLayout>
                 </VerticalStackLayout>
             </ScrollView>
                 
-            <ScrollView Grid.Row="1" Grid.Column="1">
+            <ScrollView Grid.Row="2" Grid.Column="1">
                 <VerticalStackLayout
                     x:Name="InfoPanel"
                     Padding="0,0,0,0"
                     >
-                        <Label
-                            HeightRequest="1000"
-                            VerticalOptions="End"
-                        ></Label>
+                        <!-- <Label -->
+                        <!--     HeightRequest="1000" -->
+                        <!--     VerticalOptions="End" -->
+                        <!-- ></Label> -->
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>

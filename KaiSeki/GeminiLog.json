@@ -121,20 +121,25 @@
 {
     "<original Japanese sentence>": {
         "translation": "<translation of the sentence>",
+        "grammar": "<complete grammar analysis of the sentence, taking account the structure and context>",
         "phrases": {
                 "<phrase1>": {
                     "translation": "<translation of the phrase>",
                     "grammar": "<grammar of the phrase>",
                     "words":{
                         "<word1>":{
-                            "definition": "<definition of the word>", "furigana": "<pronunciation of the word>", "original_form": "<original form of the word>", "type": "<type of the word (verb, noun, etc.)>", "grammar": "<what form it is, function of the word in the sentence, explanation of the informal form, etc.>"
+                            "definition": "<definition of the word>", 
+                            "furigana": "<pronunciation of the word>", 
+                            "original_form": "<original form of the word>", 
+                            "type": "<type of the word (verb, noun, etc.)>", 
+                            "grammar": "<what form it is, function of the word in the sentence, explanation of the informal form, etc.>"
                         },
                         "<word2>": {...}
                     }
                 },
                 "<phrase2>": {...}
-        },
-        "grammar": "<complete grammar analysis of the sentence, taking account the structure and context>"
+        }
     }
 }
+    {"<original Japanese sentence>": {"translation": "string","grammar": "<complete grammar analysis of the sentence, taking account the structure and context>","phrases": {"<phrase1>": {"translation": "string","grammar": "string","words":{"<word1>":{"definition": "string", "furigana": "string", "original_form": "string", "type": "<type of the word (verb, noun, etc.)>", "grammar": "<what form it is, function of the word in the sentence, explanation of the informal form, etc.>"},"<word2>": {}}},"<phrase2>": {}}}}
 ]

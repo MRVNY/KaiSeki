@@ -35,7 +35,7 @@ public partial class AnalyzerPage : ContentPage
 
     private async void MainPage_Loaded(object sender, EventArgs e)
     {
-        BuildSentencePanel(_geminiManager.GetExample());
+        // BuildSentencePanel(_geminiManager.GetExample());
     }
     
     private async void OnEntryCompleted(object? sender, EventArgs e)
@@ -45,56 +45,43 @@ public partial class AnalyzerPage : ContentPage
             SentenceEntry.Text = "面倒事が嫌いだから逆らいはしないものの、トワ自身は生活を改める気など全くなかった。";
         }
         
-        // SmallLabel.Text = "Analyzing...";
+        LabelScroll.IsVisible = true;
+        SmallLabel.Text = "Analyzing...";
         
         try{
             string result = await _geminiManager.PromptText(SentenceEntry.Text);
-            // SmallLabel.Text = result;
+            LabelScroll.IsVisible = false;
+            SmallLabel.Text = result;
+            Console.WriteLine(result);
+            JObject jObject = JObject.Parse(result);
+            BuildSentencePanel(jObject);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"An error occurred: {ex.Message}");
+            try
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                LabelScroll.IsVisible = true;
+                SmallLabel.Text = "Failed, trying the simplified version \n" + ex.Message + "\n" + SmallLabel.Text;
+                string result = await _geminiManager.PromptTextSimple(SentenceEntry.Text);
+                Console.WriteLine(result);
+                JObject jObject = JObject.Parse(result);
+                BuildSentencePanel(jObject);
+            }
+            catch (Exception exception)
+            {
+                SmallLabel.Text = ex.Message + "\n" + SmallLabel.Text;
+                Console.WriteLine(exception);
+                // throw;
+            }
         }
     }
     
-
-    public Expander Rec_BuildExpander(JObject jObject, int level)
-    {
-        Expander expander = new Expander();
-        string key = jObject.Properties().First().Name;
-        //show a label on the header
-        // string tab = level == 1 ? "" : new string(' ', level - 1);
-        
-        if(leaves.Contains(key))
-        {
-            Label nonExpandable = new Label { Text = key+" : " + jObject[key], FontSize = 15};
-            nonExpandable.Padding = new Thickness(level*20, 0, 0, 0);
-            expander.Header = nonExpandable;
-        }
-        else
-        {
-            Color shadeLevel = new Color(1f - 0.1f*level, 1f - 0.1f*level, 1f - 0.1f*level);
-            Label expandable = new Label { Text = key + " >", FontSize = 30 - 2*level, BackgroundColor = shadeLevel};
-            
-            expander.ExpandedChanged += OnExpandedChanged;
-            expandable.Padding = new Thickness(level*20, 0, 0, 0);
-            expander.Header = expandable;
-            StackLayout tmp = new StackLayout();
-
-            var list = ((JObject)jObject[key]).Properties();
-            foreach (JProperty item in list.Reverse())
-            {
-                if (leaves.Contains(item.Name)) tmp.Children.Add(Rec_BuildExpander(new JObject(item), level + 1));
-                else tmp.Children.Insert(0, Rec_BuildExpander(new JObject(item), level + 1));
-            }
-            expander.Content = tmp;
-        }
-
-        return expander;
-    }
-
     private void BuildSentencePanel(JObject jObject)
     {
+        SmallLabel.Text = "Analyzing...";
+        LabelScroll.IsVisible = false;
+        
         SentencePanel.Children.Clear();
         string sentence = jObject.Properties().First().Name;
         
@@ -174,29 +161,6 @@ public partial class AnalyzerPage : ContentPage
             header.Text = header.Text.Replace("▿", "◃");
         }
     }
-
-    // private void OnTapped(object? sender, TappedEventArgs e)
-    // {
-    //     InfoPanel.Children.Clear();
-    //     JObject values = (JObject)e.Parameter;
-    //     string s_grammer = values["grammar"].ToString();
-    //     string s_translation = values["translation"].ToString();
-    //     
-    //     InfoPanel.Children.Add(new Expander
-    //     {
-    //         IsExpanded = true,
-    //         Header = new Label { Text = "Grammar" },
-    //         Content = new Label { Text = s_grammer }
-    //     });
-    //     
-    //     InfoPanel.Children.Add(new Expander
-    //     {
-    //         IsExpanded = true,
-    //         Header = new Label { Text = "Translation" },
-    //         Content = new Label { Text = s_translation }
-    //     });
-    // }
-    
 
     private void OnTapped(object? sender, TappedEventArgs e)
     {
