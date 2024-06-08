@@ -1,16 +1,16 @@
-﻿using System.Windows.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
-using DotnetGeminiSDK.Model.Response;
 using Newtonsoft.Json.Linq;
 
-namespace KaiSeki;
+namespace KaiSeki.XAML;
 
-
-public partial class AnalyzerPage : ContentPage
+public partial class SentencePage : ContentPage
 {
-    private GeminiManager _geminiManager;
-
     private string[] leaves = new[]
     {
         "translation",
@@ -22,66 +22,17 @@ public partial class AnalyzerPage : ContentPage
     };
 
     private string[] skips = new[] { "phrases", "words" };
-
-    public AnalyzerPage()
+    
+    public SentencePage(Sentence sentence)
     {
         InitializeComponent();
-        this.Loaded += MainPage_Loaded;
-
-        // ResultStack.Children.Add(Rec_BuildExpander(_geminiManager.GetExample(), 1));
-        _geminiManager = new GeminiManager();
-        // BuildSentencePanel(_geminiManager.GetExample());
-    }
-
-    private async void MainPage_Loaded(object sender, EventArgs e)
-    {
-        // BuildSentencePanel(_geminiManager.GetExample());
+        
+        BuildSentencePanel(sentence.JObject);
     }
     
-    private async void OnEntryCompleted(object? sender, EventArgs e)
-    {
-        if(SentenceEntry.Text == "" || SentenceEntry.Text == null)
-        {
-            SentenceEntry.Text = "面倒事が嫌いだから逆らいはしないものの、トワ自身は生活を改める気など全くなかった。";
-        }
         
-        LabelScroll.IsVisible = true;
-        SmallLabel.Text = "Analyzing...";
-        
-        try{
-            string result = await _geminiManager.PromptText(SentenceEntry.Text);
-            LabelScroll.IsVisible = false;
-            SmallLabel.Text = result;
-            Console.WriteLine(result);
-            JObject jObject = JObject.Parse(result);
-            BuildSentencePanel(jObject);
-        }
-        catch (Exception ex)
-        {
-            try
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                LabelScroll.IsVisible = true;
-                SmallLabel.Text = "Failed, trying the simplified version \n" + ex.Message + "\n" + SmallLabel.Text;
-                string result = await _geminiManager.PromptTextSimple(SentenceEntry.Text);
-                Console.WriteLine(result);
-                JObject jObject = JObject.Parse(result);
-                BuildSentencePanel(jObject);
-            }
-            catch (Exception exception)
-            {
-                SmallLabel.Text = ex.Message + "\n" + SmallLabel.Text;
-                Console.WriteLine(exception);
-                // throw;
-            }
-        }
-    }
-    
     private void BuildSentencePanel(JObject jObject)
     {
-        SmallLabel.Text = "Analyzing...";
-        LabelScroll.IsVisible = false;
-        
         SentencePanel.Children.Clear();
         string sentence = jObject.Properties().First().Name;
         
@@ -146,12 +97,6 @@ public partial class AnalyzerPage : ContentPage
         SentencePanel.Children.Add(sentenceLayout);
         
         OnTapped("Sentence", sentenceArgs);
-
-        WordManager.Instance.Sentences.Insert(0,new Sentence
-        {
-            Text = sentence,
-            JObject = jObject
-        });
     }
 
     private void OnExpandedChanged(object? sender, ExpandedChangedEventArgs e)
@@ -205,4 +150,3 @@ public partial class AnalyzerPage : ContentPage
         }
     }
 }
-

@@ -17,7 +17,7 @@ public class FileManager
 
         if(!File.Exists(appSupDir)) Directory.CreateDirectory(appSupDir);
         
-        WriteToFile(Path.Combine(docDir, "test.txt"), "Hello from the Community Toolkit!");
+        // WriteToFile(Path.Combine(docDir, "test.txt"), "Hello from the Community Toolkit!");
         // ReadFromFile(Path.Combine(docDir, "test.txt"));
         
         // WriteToFile(Path.Combine(appSupDir, "test.txt"), "Hello from the Community Toolkit!");

@@ -5,18 +5,17 @@
 
     <ListView 
         x:Name="list" 
-        ItemsSource="{Binding Word}" 
+        ItemsSource="{Binding Sentence}" 
         SelectionMode="None"
         ItemTapped="List_OnItemTapped"
         IsPullToRefreshEnabled="True"
         Refreshing="List_OnRefreshing"
         RowHeight="50">
+        
         <ListView.ItemTemplate>
             <DataTemplate>
-                <TextCell Text="{Binding Kanji}"
-                          Detail="{Binding Hiragana}"/>
+                <TextCell Text="{Binding Text }"/>
             </DataTemplate>
-            
         </ListView.ItemTemplate>
     </ListView>
 

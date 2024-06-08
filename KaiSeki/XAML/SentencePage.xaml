@@ -1,38 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="KaiSeki.AnalyzerPage">
-    
-    <Grid
+             x:Class="KaiSeki.XAML.SentencePage">
+    <ContentPage.Content>
+        <Grid
         x:Name="Container"
         HorizontalOptions="Fill"
         RowSpacing="5"
         Padding="0,0"
         Margin="0"
-        RowDefinitions="Auto,Auto,*"
+        RowDefinitions="*"
         ColumnDefinitions="*,5*">
-        
-            <Entry
-                Grid.ColumnSpan="2"
-                Grid.Column="0"
-                x:Name="SentenceEntry"
-                Placeholder="Input Japanese sentence"
-                HorizontalOptions="Fill"
-                Margin="5,0"
-                ReturnType="Send"
-                Completed="OnEntryCompleted" />
             
-            <ScrollView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
-                        x:Name="LabelScroll"
-                        IsVisible="False">
-            <Label x:Name="SmallLabel"
-                   SemanticProperties.HeadingLevel="Level2"
-                   FontSize="18"
-                   HorizontalOptions="Center"
-                   Text="Analyzing..."/>
-            </ScrollView>
              
-            <ScrollView Grid.Row="2" Grid.Column="0">
+            <ScrollView Grid.Row="0" Grid.Column="0">
                 <VerticalStackLayout
                     x:Name="SentencePanel">
                         <VerticalStackLayout
@@ -46,7 +28,7 @@
                 </VerticalStackLayout>
             </ScrollView>
                 
-            <ScrollView Grid.Row="2" Grid.Column="1">
+            <ScrollView Grid.Row="0" Grid.Column="1">
                 <VerticalStackLayout
                     x:Name="InfoPanel"
                     Padding="0,0,0,0"
@@ -58,6 +40,5 @@
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>
-
+    </ContentPage.Content>
 </ContentPage>
-
