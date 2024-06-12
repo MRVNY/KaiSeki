@@ -11,6 +11,7 @@ public partial class ListPage : ContentPage
     {
         InitializeComponent();
         list.ItemsSource = WordManager.Instance.Sentences;
+        NavigatedTo += (sender, args) => list.ItemsSource = WordManager.Instance.Sentences;
     }
 
     private void List_OnItemTapped(object? sender, ItemTappedEventArgs e)

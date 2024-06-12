@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KaiSeki.AnalyzerPage">
     
+    
     <Grid
         x:Name="Container"
         HorizontalOptions="Fill"
@@ -11,16 +12,23 @@
         Margin="0"
         RowDefinitions="Auto,Auto,*"
         ColumnDefinitions="*,5*">
+        <Grid.GestureRecognizers>
+            <SwipeGestureRecognizer
+                Direction="Down,Up"
+                Swiped="SwipeGestureRecognizer_OnSwiped"></SwipeGestureRecognizer>
+        </Grid.GestureRecognizers>
         
-            <Entry
+        <Entry
                 Grid.ColumnSpan="2"
                 Grid.Column="0"
                 x:Name="SentenceEntry"
                 Placeholder="Input Japanese sentence"
                 HorizontalOptions="Fill"
-                Margin="5,0"
+                Margin="0,0"
                 ReturnType="Send"
-                Completed="OnEntryCompleted" />
+                Completed="OnEntryCompleted"
+                ClearButtonVisibility="WhileEditing"/>
+            
             
             <ScrollView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
                         x:Name="LabelScroll"
@@ -51,7 +59,7 @@
                     x:Name="InfoPanel"
                     Padding="0,0,0,0"
                     >
-                        <!-- <Label -->
+                    <!-- <Label -->
                         <!--     HeightRequest="1000" -->
                         <!--     VerticalOptions="End" -->
                         <!-- ></Label> -->

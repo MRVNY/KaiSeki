@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
+using Microsoft.Maui.LifecycleEvents;
+using UIKit;
 
 namespace KaiSeki;
 public static class MauiProgram
@@ -7,11 +9,39 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
-        builder.UseMauiApp<App>().ConfigureFonts(fonts =>
+        builder
+            .UseMauiApp<App>().ConfigureFonts(fonts =>
         {
             fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-        }).UseMauiCommunityToolkit();
+        })
+            .UseMauiCommunityToolkit()
+            .ConfigureLifecycleEvents(events =>
+            {
+#if IOS
+                events.AddiOS(ios => ios
+                    .OnActivated(app =>
+                        {
+                            LogEvent(nameof(iOSLifecycle.OnActivated));
+                            //if page header is Analayzer
+                            if(AppShell.Instance.CurrentPage == AnalyzerPage.Instance)
+                            {
+                                AnalyzerPage.Instance.GetClipboard(null, null);
+                            }
+                        })
+                    .OnResignActivation((app) => LogEvent(nameof(iOSLifecycle.OnResignActivation)))
+                    .DidEnterBackground((app) => LogEvent(nameof(iOSLifecycle.DidEnterBackground)))
+                    .WillTerminate((app) => LogEvent(nameof(iOSLifecycle.WillTerminate))));
+#endif
+                static bool LogEvent(string eventName, string type = null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Lifecycle event: {eventName}{(type == null ? string.Empty : $" ({type})")}");
+                    return true;
+                }
+                
+                
+            });
+        
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

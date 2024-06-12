@@ -1,4 +1,6 @@
-﻿namespace KaiSeki;
+﻿using Microsoft.Maui.LifecycleEvents;
+
+namespace KaiSeki;
 
 public partial class App : Application
 {
@@ -8,5 +10,8 @@ public partial class App : Application
         new WordManager();
         new FileManager();
         MainPage = new NavigationPage(new AppShell());
+        
+        //event when app activated and analyzer activated
+        // LifecycleEvents.iOS.OnActivated((app) => OnActivated(app));
     }
 }

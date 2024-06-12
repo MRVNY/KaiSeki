@@ -1,7 +1,3 @@
-using DotnetGeminiSDK.Client;
-using DotnetGeminiSDK.Client.Interfaces;
-using DotnetGeminiSDK.Config;
-using DotnetGeminiSDK.Model.Response;
 using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http;
@@ -15,9 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 public class GeminiManager
 {
-    private string geminiKey;
-    private readonly IGeminiClient _geminiClient;
-    private JObject exampleJson;
+    // private JObject exampleJson;
+    private string apiUrl;
     
     string en_1 = "Translate the given Japanese sentence, and parse and analyze the grammar of every word. Just plain text. No descriptions and explanations. Return only raw JSON object without markdown. No markdown format.\nAll the grammar, except for the quoted, should be in English and should include some insights\nThe parsing for words and phrases should not fragment too much\n [Structure of the JSON object] \n ";
     string cn_1 =
@@ -36,55 +31,18 @@ public class GeminiManager
         var reader = new StreamReader(rawPath);
         var json = reader.ReadToEnd();
         var jObject = JObject.Parse(json);
-        geminiKey = jObject.GetValue("geminiKey").ToString();
+        apiUrl = jObject.GetValue("apiUrl").ToString();
 
-        GoogleGeminiConfig config = new GoogleGeminiConfig
-        {
-            ApiKey = geminiKey,
-            // ImageBaseUrl = "CURRENTLY_IMAGE_BASE_URL",
-            TextBaseUrl = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-001"
-        };
-        
-        _geminiClient = new GeminiClient(config);
 
-        exampleJson = jObject.GetValue("example").ToObject<JObject>();
-    }
-    
-
-    public async Task<string> PromptText(string text)
-    {
-        string en_3 = $"Sentence: \"{text}\"";
-        string cn_3 = $"句子: \"{text}\"";
-        string prompt = en_1 + en_2 + en_3;
-        GeminiMessageResponse response = await _geminiClient.TextPrompt(prompt);
-        return response.Candidates[0].Content.Parts[0].Text;
-    }
-    
-    public async Task<string> PromptTextSimple(string text)
-    {
-        string en_3 = $"Sentence: \"{text}\"";
-        string cn_3 = $"句子: \"{text}\"";
-        string prompt = en_1 + en2_2 + en_3;
-        GeminiMessageResponse response = await _geminiClient.TextPrompt(prompt);
-        return response.Candidates[0].Content.Parts[0].Text;;
+        // exampleJson = jObject.GetValue("example").ToObject<JObject>();
     }
     
     
     
-    public static async Task<string> RESTAsk(string apiKey, string question)
+    
+    public async Task<string> RESTAsk(string question)
     {
-        string apiUrl = "generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=" + apiKey;
-
-        string jsonRequestBody = @"{
-            ""system_instruction"":
-                    {""parts"": {
-                       ""text"": ""Translate the given Japanese sentence and then apply furigana to all the kanji, and then parse and analyze the grammar of every word? Just plain text. No markdown format""}},
-            ""contents"": [{
-                ""parts"":[{
-                    ""text"": """ + question + @"""
-                }]
-            }]
-        }";
+        string jsonRequestBody = $"{{ \"name\": \"{question}\" }}";
 
         using (HttpClient client = new HttpClient())
         {
@@ -95,11 +53,7 @@ public class GeminiManager
                 if (response.IsSuccessStatusCode)
                 {
                     string result = await response.Content.ReadAsStringAsync();
-                    JObject jObject = JObject.Parse(result);
-                    Console.WriteLine(jObject);
-                    
-                    return (string)(jObject["candidates"][0]["content"]["parts"][0]["text"]);
-                    // return result.ToString();
+                    return result;
                 }
             }
             catch (Exception ex)
@@ -110,11 +64,4 @@ public class GeminiManager
 
         return null;
     }
-    
-    public JObject GetExample()
-    {
-        return exampleJson;
-    }
-    
-
 }

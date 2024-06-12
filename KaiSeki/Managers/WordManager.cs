@@ -46,7 +46,7 @@ public class WordManager
     public static bool HasKatakana(string text) { return text.Any(c => c >= 0x30A0 && c <= 0x30FF); }
     public static bool HasRomaji(string text) { return text.Any(c => c >= 0x0020 && c <= 0x007E); }
 
-    private void Save()
+    public void Save()
     {
         //serialize and save to file
         string json = JsonConvert.SerializeObject(Sentences);

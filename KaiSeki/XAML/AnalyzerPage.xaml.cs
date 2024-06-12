@@ -2,13 +2,16 @@
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 using DotnetGeminiSDK.Model.Response;
+using Microsoft.Maui.LifecycleEvents;
 using Newtonsoft.Json.Linq;
+using UIKit;
 
 namespace KaiSeki;
 
 
 public partial class AnalyzerPage : ContentPage
 {
+    public static AnalyzerPage Instance;
     private GeminiManager _geminiManager;
 
     private string[] leaves = new[]
@@ -31,6 +34,12 @@ public partial class AnalyzerPage : ContentPage
         // ResultStack.Children.Add(Rec_BuildExpander(_geminiManager.GetExample(), 1));
         _geminiManager = new GeminiManager();
         // BuildSentencePanel(_geminiManager.GetExample());
+        // Appearing += GetClipboard;
+        // NavigatedTo += GetClipboard;
+        
+        //diable keyboard on entry when swiped down
+        // Unfocused += (sender, args) => SentenceEntry.Unfocus();
+        Instance = this;
     }
 
     private async void MainPage_Loaded(object sender, EventArgs e)
@@ -38,18 +47,29 @@ public partial class AnalyzerPage : ContentPage
         // BuildSentencePanel(_geminiManager.GetExample());
     }
     
+    public async void GetClipboard(object? sender, EventArgs e)
+    {
+        string? clipboardText = await Clipboard.GetTextAsync();
+        if (clipboardText != SentenceEntry.Text)
+        {
+            SentenceEntry.Text = clipboardText;
+            //activate keyboard on entry
+            SentenceEntry.Focus();
+        }
+    }
+    
     private async void OnEntryCompleted(object? sender, EventArgs e)
     {
         if(SentenceEntry.Text == "" || SentenceEntry.Text == null)
         {
-            SentenceEntry.Text = "面倒事が嫌いだから逆らいはしないものの、トワ自身は生活を改める気など全くなかった。";
+            SentenceEntry.Text = "カイセキは、日本語の解析します。";
         }
         
         LabelScroll.IsVisible = true;
         SmallLabel.Text = "Analyzing...";
         
         try{
-            string result = await _geminiManager.PromptText(SentenceEntry.Text);
+            string result = await _geminiManager.RESTAsk(SentenceEntry.Text);
             LabelScroll.IsVisible = false;
             SmallLabel.Text = result;
             Console.WriteLine(result);
@@ -63,7 +83,7 @@ public partial class AnalyzerPage : ContentPage
                 Console.WriteLine($"An error occurred: {ex.Message}");
                 LabelScroll.IsVisible = true;
                 SmallLabel.Text = "Failed, trying the simplified version \n" + ex.Message + "\n" + SmallLabel.Text;
-                string result = await _geminiManager.PromptTextSimple(SentenceEntry.Text);
+                string result = await _geminiManager.RESTAsk(SentenceEntry.Text);
                 Console.WriteLine(result);
                 JObject jObject = JObject.Parse(result);
                 BuildSentencePanel(jObject);
@@ -152,6 +172,7 @@ public partial class AnalyzerPage : ContentPage
             Text = sentence,
             JObject = jObject
         });
+        WordManager.Instance.Save();
     }
 
     private void OnExpandedChanged(object? sender, ExpandedChangedEventArgs e)
@@ -203,6 +224,11 @@ public partial class AnalyzerPage : ContentPage
                 InfoPanel.Children.Add(expander);
             }
         }
+    }
+
+    private void SwipeGestureRecognizer_OnSwiped(object? sender, SwipedEventArgs e)
+    {
+        SentenceEntry.Unfocus();
     }
 }
 
