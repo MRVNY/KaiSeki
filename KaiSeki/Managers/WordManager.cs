@@ -14,7 +14,6 @@ public class WordManager
     
     private static string appSupDir = FileSystem.Current.AppDataDirectory + "/Application Support/";
     
-    public List<Word> Words { get; set; }
     public List<Sentence> Sentences { get; set; }
     
     public WordManager()

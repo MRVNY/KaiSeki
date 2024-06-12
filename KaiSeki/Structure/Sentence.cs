@@ -10,4 +10,10 @@ public class Sentence
     // public Phrase[] Phrases { get; set; }
 
     public JObject JObject { get; set; }
+    
+    public Sentence(JObject jObject)
+    {
+        Text = jObject.Properties().First().Name;
+        JObject = jObject;
+    }
 }

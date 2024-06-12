@@ -1,5 +1,4 @@
-﻿using DotnetGeminiSDK.Model.Response;
-using KaiSeki.XAML;
+﻿using KaiSeki.XAML;
 using Newtonsoft.Json.Linq;
 
 namespace KaiSeki;
