@@ -6,6 +6,10 @@ namespace KaiSeki.XAML;
 
 public partial class SentenceView : ContentView
 {
+    private Color wordColor = Color.FromArgb("#512BD4");
+    private Color sentenceColor = Color.FromArgb("#DFD8F7");
+    private Color phraseColor = Color.FromArgb("#ac99ea");
+    
     private string[] leaves = new[] { "translation", "grammar", "definition", "furigana", "original_form", "type"};
     private string[] skips = new[] { "phrases", "words" };
 
@@ -18,7 +22,7 @@ public partial class SentenceView : ContentView
         string sentence = jObject.Properties().First().Name;
         
         VerticalStackLayout sentenceLayout = new VerticalStackLayout();
-        sentenceLayout.BackgroundColor = Color.FromArgb("#DFD8F7");
+        sentenceLayout.BackgroundColor = sentenceColor;
         sentenceLayout.Padding = new Thickness(10, 30, 5, 5);;
         
         TapGestureRecognizer sentenceTap = new TapGestureRecognizer();
@@ -35,7 +39,7 @@ public partial class SentenceView : ContentView
             
             phraseLayout = new VerticalStackLayout
             {
-                BackgroundColor = Color.FromArgb("#ac99ea"),
+                BackgroundColor = phraseColor,
                 Padding = new Thickness(10, 30, 5, 5),
                 Margin = 4,
             };
@@ -61,9 +65,9 @@ public partial class SentenceView : ContentView
                 
                 wordLayout.Children.Add(new Label
                 {
-                    BackgroundColor = Color.FromArgb("#512BD4"),
+                    BackgroundColor = wordColor,
                     HorizontalOptions = LayoutOptions.Center,
-                    TextColor = Color.FromArgb("#FFFFFF"),
+                    TextColor = Colors.White,
                     Padding = 2, Margin = 4,
                     FontSize = 20,
                     TextType = TextType.Html,
@@ -77,7 +81,7 @@ public partial class SentenceView : ContentView
         }
         SentencePanel.Children.Add(sentenceLayout);
         
-        OnTapped(sentence, sentenceArgs,"Sentence");
+        OnTapped(sentenceLayout, sentenceArgs,"Sentence");
 
         if(WordManager.Instance.Sentences.Any(s => s.Text == sentence))
         {
@@ -85,6 +89,11 @@ public partial class SentenceView : ContentView
         }
         WordManager.Instance.Sentences.Insert(0,new Sentence(jObject));
         WordManager.Instance.Save();
+    }
+    
+    public void Clear()
+    {
+        SentencePanel.Children.Clear();
     }
 
     private void OnExpandedChanged(object? sender, ExpandedChangedEventArgs e)
@@ -103,21 +112,21 @@ public partial class SentenceView : ContentView
 
     private void OnTapped(object? sender, TappedEventArgs e, string title)
     {
-        // if (selected != null)
-        // {
-        //     selected.BackgroundColor = selected.BackgroundColor.WithLuminosity(1f);
-        // }
-        // selected = sender as VerticalStackLayout;
-        // oldColor = selected.BackgroundColor;
-        // selected.BackgroundColor = selected.BackgroundColor.WithLuminosity(0.5f);
-        //
+        if (selected != null)
+        {
+            selected.BackgroundColor = oldColor;
+        }
+        selected = sender as VerticalStackLayout;
+        oldColor = selected.BackgroundColor;
+        selected.BackgroundColor = Colors.Gray;
+        
         InfoPanel.Children.Clear();
         InfoPanel.Children.Add(new Label
         {
             Text = title,
             FontSize = 40, 
             HorizontalTextAlignment = TextAlignment.Center,
-            BackgroundColor = Color.FromArgb("#DFD8F7")
+            BackgroundColor = sentenceColor
         });
         JObject values = (JObject)e.Parameter;
         foreach (JProperty item in values.Properties())
@@ -130,7 +139,7 @@ public partial class SentenceView : ContentView
                     IsExpanded = true,
                     Header = new Label { 
                         Text = item.Name + "▿", FontSize = 25, 
-                        BackgroundColor = Color.FromArgb("#ac99ea"),
+                        BackgroundColor = phraseColor,
                         Padding = 5
                     },
                     Content = new Label

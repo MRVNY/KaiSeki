@@ -13,10 +13,10 @@ public partial class ListPage : ContentPage
         NavigatedTo += (sender, args) => list.ItemsSource = WordManager.Instance.Sentences;
     }
 
-    private void List_OnItemTapped(object? sender, ItemTappedEventArgs e)
+    private void List_OnItemTapped(object? sender, TappedEventArgs e)
     {
         //alert
-        var item = (Sentence) e.Item;
+        var item = e.Parameter as Sentence;
         // DisplayAlert(word.Kanji, $"Hiragana: {word.Hiragana}\nRomanji: {word.Romanji}", "OK");
         
         //go to a new page
@@ -25,8 +25,17 @@ public partial class ListPage : ContentPage
 
     private void List_OnRefreshing(object? sender, EventArgs e)
     {
+        list.ItemsSource = null;
         list.ItemsSource =  WordManager.Instance.Refresh();
-        list.EndRefresh();
+        // list.EndRefresh();
+    }
+
+    private void OnDelete(object? sender, EventArgs e)
+    {
+        SwipeItem swipeItem = (SwipeItem) sender;
+        Sentence sentence = swipeItem.BindingContext as Sentence;
+        WordManager.Instance.Sentences.Remove(sentence);
+        List_OnRefreshing(null,null);
     }
 }
 

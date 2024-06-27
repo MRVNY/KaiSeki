@@ -12,7 +12,7 @@
         Padding="0,0"
         Margin="0"
         RowDefinitions="*"
-        ColumnDefinitions="*,5*">
+        ColumnDefinitions="*,4*">
             
             <xaml:SentenceView 
                 Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"

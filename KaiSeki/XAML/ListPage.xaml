@@ -3,21 +3,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KaiSeki.ListPage">
 
-    <ListView 
+    <CollectionView 
         x:Name="list" 
         ItemsSource="{Binding Sentence}" 
         SelectionMode="None"
-        ItemTapped="List_OnItemTapped"
-        IsPullToRefreshEnabled="True"
-        Refreshing="List_OnRefreshing"
-        RowHeight="50">
+        VerticalScrollBarVisibility="Default"
+        HorizontalOptions="Fill">
         
-        <ListView.ItemTemplate>
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout Orientation="Vertical" />
+        </CollectionView.ItemsLayout>
+        
+        <CollectionView.ItemTemplate>
             <DataTemplate>
-                <TextCell Text="{Binding Text }"/>
+                <SwipeView>
+                    <SwipeView.RightItems>
+                        <SwipeItems>
+                            <SwipeItem Text="Delete"
+                                       BackgroundColor="Red"
+                                       Invoked="OnDelete"/>
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+                    
+                    <SwipeView.Content>
+                    <HorizontalStackLayout
+                        Padding="4,7"
+                        >
+                        <HorizontalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="List_OnItemTapped" CommandParameter="{Binding}"/>
+                        </HorizontalStackLayout.GestureRecognizers>
+                        <Label 
+                            Text="{Binding Text }"
+                            FontSize="20"
+                            Margin="4,6"
+                            BackgroundColor="LightGray"
+                            />
+                    </HorizontalStackLayout>
+                    </SwipeView.Content>
+                </SwipeView>
             </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 
 </ContentPage>
 

@@ -7,6 +7,8 @@ public partial class AnalyzerPage : ContentPage
 {
     public static AnalyzerPage Instance;
     private GeminiManager _geminiManager;
+    private Task parsing;
+    private JObject jObject;
 
     public AnalyzerPage()
     {
@@ -47,43 +49,44 @@ public partial class AnalyzerPage : ContentPage
             SentenceEntry.Text = "日本語の解析します。";
         }
         
-        LabelScroll.IsVisible = true;
-        SmallLabel.Text = "Analyzing...";
+        Indicator.IsVisible = true;
+        Indicator.IsRunning = true;
+        LabelScroll.IsVisible = false;
+        SentenceView.Clear();
         
         try{
             string result = await _geminiManager.RESTAsk(SentenceEntry.Text);
-            LabelScroll.IsVisible = false;
-            SmallLabel.Text = result;
-            // Console.WriteLine(result);
-            JObject jObject = JObject.Parse(result);
+            Indicator.IsVisible = false;
             
+            jObject = null;
+            jObject = JObject.Parse(result);
             SentenceView.BuildSentence(jObject);
         }
         catch (Exception ex)
         {
             try
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                SmallLabel.Text = "Failed, trying one more time \n" + ex.Message;
                 LabelScroll.IsVisible = true;
-                SmallLabel.Text = "Failed, trying the simplified version \n" + ex.Message + "\n" + SmallLabel.Text;
+                Indicator.IsVisible = true;
+
                 string result = await _geminiManager.RESTAsk(SentenceEntry.Text);
-                Console.WriteLine(result);
-                JObject jObject = JObject.Parse(result);
                 
-                SmallLabel.Text = "Analyzing...";
+                Indicator.IsVisible = false;
                 LabelScroll.IsVisible = false;
                 
+                jObject = null;
+                jObject = JObject.Parse(result);
                 SentenceView.BuildSentence(jObject);
             }
             catch (Exception exception)
             {
-                SmallLabel.Text = ex.Message + "\n" + SmallLabel.Text;
-                Console.WriteLine(exception);
-                // throw;
+                LabelScroll.IsVisible = true;
+                SmallLabel.Text = "Failed \n" + exception.Message;
             }
         }
     }
-    
+
     private void SwipeGestureRecognizer_OnSwiped(object? sender, SwipedEventArgs e)
     {
         SentenceEntry.Unfocus();
