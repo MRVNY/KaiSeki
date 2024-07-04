@@ -1,49 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="KaiSeki.ListPage">
 
-    <CollectionView 
+    <Grid
+        RowDefinitions="*">
+    <ListView 
         x:Name="list" 
         ItemsSource="{Binding Sentence}" 
         SelectionMode="None"
-        VerticalScrollBarVisibility="Default"
-        HorizontalOptions="Fill">
+        ItemTapped="List_OnItemTapped"
+        RowHeight="50"
+        >
         
-        <CollectionView.ItemsLayout>
-            <LinearItemsLayout Orientation="Vertical" />
-        </CollectionView.ItemsLayout>
-        
-        <CollectionView.ItemTemplate>
+        <ListView.ItemTemplate>
             <DataTemplate>
-                <SwipeView>
+                <ViewCell>
+                <SwipeView
+                    android:SwipeView.SwipeTransitionMode="Drag"
+                    ios:SwipeView.SwipeTransitionMode="Drag">
                     <SwipeView.RightItems>
                         <SwipeItems>
                             <SwipeItem Text="Delete"
                                        BackgroundColor="Red"
-                                       Invoked="OnDelete"/>
+                                       Invoked="OnDelete"
+                                       />
                         </SwipeItems>
                     </SwipeView.RightItems>
                     
                     <SwipeView.Content>
-                    <HorizontalStackLayout
-                        Padding="4,7"
-                        >
-                        <HorizontalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="List_OnItemTapped" CommandParameter="{Binding}"/>
-                        </HorizontalStackLayout.GestureRecognizers>
-                        <Label 
-                            Text="{Binding Text }"
-                            FontSize="20"
-                            Margin="4,6"
-                            BackgroundColor="LightGray"
-                            />
-                    </HorizontalStackLayout>
+                        <Grid>
+                        <Label Text="{Binding Text}"
+                               MaxLines="1"
+                               LineBreakMode="TailTruncation"
+                               Margin="6"
+                               FontSize="15"
+                               VerticalTextAlignment="Center"/>
+                        </Grid>
                     </SwipeView.Content>
                 </SwipeView>
+                </ViewCell>
             </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+        </ListView.ItemTemplate>
+    </ListView>
+    </Grid>
 
 </ContentPage>
 

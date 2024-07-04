@@ -94,6 +94,7 @@ public partial class SentenceView : ContentView
     public void Clear()
     {
         SentencePanel.Children.Clear();
+        InfoPanel.Children.Clear();
     }
 
     private void OnExpandedChanged(object? sender, ExpandedChangedEventArgs e)

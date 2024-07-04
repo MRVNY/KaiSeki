@@ -13,11 +13,10 @@ public partial class ListPage : ContentPage
         NavigatedTo += (sender, args) => list.ItemsSource = WordManager.Instance.Sentences;
     }
 
-    private void List_OnItemTapped(object? sender, TappedEventArgs e)
+    private void List_OnItemTapped(object? sender, ItemTappedEventArgs itemTappedEventArgs)
     {
         //alert
-        var item = e.Parameter as Sentence;
-        // DisplayAlert(word.Kanji, $"Hiragana: {word.Hiragana}\nRomanji: {word.Romanji}", "OK");
+        var item = itemTappedEventArgs.Item as Sentence;
         
         //go to a new page
         Navigation.PushAsync(new SentencePage(item));

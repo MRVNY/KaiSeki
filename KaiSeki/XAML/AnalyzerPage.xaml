@@ -22,34 +22,35 @@
         </Grid.GestureRecognizers>
         
         <Entry
-                Grid.ColumnSpan="2"
-                Grid.Column="0"
-                x:Name="SentenceEntry"
-                Placeholder="Input Japanese sentence"
-                HorizontalOptions="Fill"
-                Margin="0,0"
-                ReturnType="Send"
-                Completed="OnEntryCompleted"
-                ClearButtonVisibility="WhileEditing"/>
+            Grid.ColumnSpan="2"
+            Grid.Column="0"
+            x:Name="SentenceEntry"
+            Placeholder="Input Japanese sentence"
+            HorizontalOptions="Fill"
+            Margin="0,0"
+            ReturnType="Send"
+            Completed="OnEntryCompleted"
+            ClearButtonVisibility="WhileEditing"/>
             
-            <ActivityIndicator
-                x:Name="Indicator"
-                Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-            ></ActivityIndicator>
+        <ActivityIndicator
+            x:Name="Indicator"
+            Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+        ></ActivityIndicator>
+    
+        <ScrollView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
+                    x:Name="LabelScroll"
+                    IsVisible="False">
+        <Label x:Name="SmallLabel"
+               SemanticProperties.HeadingLevel="Level2"
+               FontSize="18"
+               HorizontalOptions="Center"
+               Text="Analyzing..."/>
+        </ScrollView>
+    
+        <xaml:SentenceView 
+            Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+            x:Name="SentenceView"></xaml:SentenceView>
         
-            <ScrollView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
-                        x:Name="LabelScroll"
-                        IsVisible="False">
-            <Label x:Name="SmallLabel"
-                   SemanticProperties.HeadingLevel="Level2"
-                   FontSize="18"
-                   HorizontalOptions="Center"
-                   Text="Analyzing..."/>
-            </ScrollView>
-        
-            <xaml:SentenceView 
-                Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
-                x:Name="SentenceView"></xaml:SentenceView>
         </Grid>
 
 </ContentPage>

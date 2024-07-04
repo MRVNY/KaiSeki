@@ -43,6 +43,7 @@ public partial class AnalyzerPage : ContentPage
     
     private async void OnEntryCompleted(object? sender, EventArgs e)
     {
+        SentenceEntry.Unfocus();
         if(SentenceEntry.Text == "" || SentenceEntry.Text == null)
         {
             // SentenceEntry.Text = "カイセキは、日本語の解析します。";
@@ -53,6 +54,7 @@ public partial class AnalyzerPage : ContentPage
         Indicator.IsRunning = true;
         LabelScroll.IsVisible = false;
         SentenceView.Clear();
+        
         
         try{
             string result = await _geminiManager.RESTAsk(SentenceEntry.Text);
