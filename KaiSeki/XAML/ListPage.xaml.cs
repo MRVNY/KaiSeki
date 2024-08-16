@@ -9,6 +9,7 @@ public partial class ListPage : ContentPage
     public ListPage()
     {
         InitializeComponent();
+        NavigationPage.SetHasNavigationBar(this, false);
         list.ItemsSource = WordManager.Instance.Sentences;
         NavigatedTo += (sender, args) => list.ItemsSource = WordManager.Instance.Sentences;
     }

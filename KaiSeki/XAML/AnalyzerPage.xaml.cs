@@ -14,7 +14,10 @@ public partial class AnalyzerPage : ContentPage
     {
         InitializeComponent();
         this.Loaded += MainPage_Loaded;
+        
+        NavigationPage.SetHasNavigationBar(this, false);
 
+        // SentenceView.IsVisible = false;
         _geminiManager = new GeminiManager();
         // BuildSentencePanel(_geminiManager.GetExample());
         // Appearing += GetClipboard;
@@ -25,7 +28,7 @@ public partial class AnalyzerPage : ContentPage
 
     private async void MainPage_Loaded(object sender, EventArgs e)
     {
-        // BuildSentencePanel(_geminiManager.GetExample());
+        // SentenceView.BuildSentence(_geminiManager.GetExample());
     }
     
     public async void GetClipboard(object? sender, EventArgs e)
@@ -53,6 +56,7 @@ public partial class AnalyzerPage : ContentPage
         Indicator.IsVisible = true;
         Indicator.IsRunning = true;
         LabelScroll.IsVisible = false;
+        // SentenceView.IsVisible = false;
         SentenceView.Clear();
         
         
@@ -61,7 +65,8 @@ public partial class AnalyzerPage : ContentPage
             Indicator.IsVisible = false;
             
             jObject = null;
-            jObject = JObject.Parse(result);
+            jObject = JSONParse(result);
+            // SentenceView.IsVisible = true;
             SentenceView.BuildSentence(jObject);
         }
         catch (Exception ex)
@@ -78,7 +83,8 @@ public partial class AnalyzerPage : ContentPage
                 LabelScroll.IsVisible = false;
                 
                 jObject = null;
-                jObject = JObject.Parse(result);
+                jObject = JSONParse(result);
+                // SentenceView.IsVisible = true;
                 SentenceView.BuildSentence(jObject);
             }
             catch (Exception exception)
@@ -87,6 +93,31 @@ public partial class AnalyzerPage : ContentPage
                 SmallLabel.Text = "Failed \n" + exception.Message;
             }
         }
+    }
+
+    JObject JSONParse(string result)
+    {
+        JObject jObject = null;
+        try
+        {
+            jObject = JObject.Parse(result);
+        }
+        catch (Exception exception)
+        {
+            result += "}";
+            try
+            {
+                jObject = JObject.Parse(result);
+            }
+            catch (Exception e)
+            {
+                //minus last two characters
+                result = result.Substring(0, result.Length - 2);
+                jObject = JObject.Parse(result);
+            }
+        }
+
+        return jObject;
     }
 
     private void SwipeGestureRecognizer_OnSwiped(object? sender, SwipedEventArgs e)
