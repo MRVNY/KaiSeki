@@ -5,6 +5,7 @@ public partial class SentencePage : ContentPage
     public SentencePage()
     {
         InitializeComponent();
+        NavigationPage.SetHasNavigationBar(this, false);
     }
     
     public SentencePage(Sentence sentence)
@@ -12,6 +13,7 @@ public partial class SentencePage : ContentPage
         InitializeComponent();
         
         SentenceView.BuildSentence(sentence.JObject);
+        NavigationPage.SetHasNavigationBar(this, false);
     }
     
 }

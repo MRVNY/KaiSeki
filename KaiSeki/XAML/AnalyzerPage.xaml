@@ -6,51 +6,40 @@
     
     
     <Grid
-        x:Name="Container"
-        HorizontalOptions="Fill"
-        RowSpacing="5"
-        Padding="0,0"
-        Margin="0"
         RowDefinitions="Auto,Auto,Auto,*"
-        ColumnDefinitions="*,4*">
+        ColumnDefinitions="*">
         <Grid.GestureRecognizers>
             <SwipeGestureRecognizer
                 Direction="Down,Up"
                 Swiped="SwipeGestureRecognizer_OnSwiped">
-                
             </SwipeGestureRecognizer>
         </Grid.GestureRecognizers>
         
         <Entry
-            Grid.ColumnSpan="2"
-            Grid.Column="0"
             x:Name="SentenceEntry"
             Placeholder="Input Japanese sentence"
             HorizontalOptions="Fill"
-            Margin="0,0"
             ReturnType="Send"
             Completed="OnEntryCompleted"
             ClearButtonVisibility="WhileEditing"/>
             
-        <ActivityIndicator
+        <ActivityIndicator Grid.Row="1"
             x:Name="Indicator"
-            Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-        ></ActivityIndicator>
+            IsVisible="False"/>
     
-        <ScrollView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
+        <ScrollView Grid.Row="2"
                     x:Name="LabelScroll"
                     IsVisible="False">
-        <Label x:Name="SmallLabel"
-               SemanticProperties.HeadingLevel="Level2"
-               FontSize="18"
-               HorizontalOptions="Center"
-               Text="Analyzing..."/>
+            <Label x:Name="SmallLabel"
+                   SemanticProperties.HeadingLevel="Level2"
+                   FontSize="18"
+                   HorizontalOptions="Center"
+                   Text="Analyzing..."/>
         </ScrollView>
     
-        <xaml:SentenceView 
-            Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
-            x:Name="SentenceView"></xaml:SentenceView>
-        
+        <xaml:SentenceView Grid.Row="3"
+                           VerticalOptions="Fill"
+                           x:Name="SentenceView"/>
         </Grid>
 
 </ContentPage>

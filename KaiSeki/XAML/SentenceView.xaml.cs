@@ -9,6 +9,7 @@ public partial class SentenceView : ContentView
     private Color wordColor = Color.FromArgb("#512BD4");
     private Color sentenceColor = Color.FromArgb("#DFD8F7");
     private Color phraseColor = Color.FromArgb("#ac99ea");
+    private Thickness padding = new Thickness(10, 30, 5, 5);
     
     private string[] leaves = new[] { "translation", "grammar", "definition", "furigana", "original_form", "type"};
     private string[] skips = new[] { "phrases", "words" };
@@ -20,11 +21,13 @@ public partial class SentenceView : ContentView
     {
         SentencePanel.Children.Clear();
         string sentence = jObject.Properties().First().Name;
+        string tmp = sentence;
         
         VerticalStackLayout sentenceLayout = new VerticalStackLayout();
         sentenceLayout.BackgroundColor = sentenceColor;
-        sentenceLayout.Padding = new Thickness(10, 30, 5, 5);;
+        sentenceLayout.Padding = padding;
         
+        //Sentence tap event
         TapGestureRecognizer sentenceTap = new TapGestureRecognizer();
         TappedEventArgs sentenceArgs = new TappedEventArgs(jObject[sentence]);
         sentenceTap.Tapped += (sender, _) => OnTapped(sender, sentenceArgs, "Sentence");
@@ -35,15 +38,37 @@ public partial class SentenceView : ContentView
         foreach (JProperty i in phrases.Properties())
         {
             string phrase = i.Name;
+            
+            // string[] tmpP = tmp.Split(new string[] { phrase }, 2, StringSplitOptions.None);
+            // if (tmpP.Length > 1)
+            // {
+            //     if (tmpP[0] != "")
+            //     {
+            //         //If missed a word, put it in the end of the last phrase
+            //         ((VerticalStackLayout)sentenceLayout.Children.Last()).Children.Add(new Label
+            //         {
+            //             BackgroundColor = Colors.Transparent,
+            //             HorizontalOptions = LayoutOptions.Center,
+            //             TextColor = Colors.White,
+            //             Padding = 2, Margin = 4,
+            //             FontSize = 20,
+            //             TextType = TextType.Html,
+            //             Text = string.Join("<br>", tmpP[0].ToCharArray())
+            //         });
+            //     }
+            //     tmp = tmpP[1];
+            // }
+
             JObject phrasevalues = (JObject)phrases[phrase];
             
             phraseLayout = new VerticalStackLayout
             {
                 BackgroundColor = phraseColor,
-                Padding = new Thickness(10, 30, 5, 5),
+                Padding = padding,
                 Margin = 4,
             };
 
+            //Phrase tap event
             TapGestureRecognizer phraseTap = new TapGestureRecognizer();
             TappedEventArgs phraseArgs = new TappedEventArgs(phrasevalues);
             phraseTap.Tapped += (sender, _) => OnTapped(sender, phraseArgs, "Phrase");
@@ -54,15 +79,46 @@ public partial class SentenceView : ContentView
             foreach (JProperty j in words.Properties())
             {
                 string word = j.Name;
+                
+                //If missed a word, put it in as a non-clickable label
+                string[] tmpW = tmp.Split(new string[] { word }, 2, StringSplitOptions.None);
+                if (tmpW.Length > 1)
+                {
+                    if (tmpW[0] != "")
+                    {
+                        Label missedWord = new Label
+                        {
+                            BackgroundColor = Colors.Transparent,
+                            HorizontalOptions = LayoutOptions.Center,
+                            TextColor = Colors.White,
+                            Padding = 2, Margin = 4,
+                            FontSize = 20,
+                            TextType = TextType.Html,
+                            Text = string.Join("<br>", tmpW[0].ToCharArray())
+                        };
+                        if(phraseLayout.Children.Count == 0)
+                        { //If there is no word in the phrase, add the missed word to the last phrase
+                            ((VerticalStackLayout)sentenceLayout.Children.Last()).Children.Add(missedWord);
+                        }
+                        else
+                        { //If there is a word in the phrase, add the missed word before the next word
+                            phraseLayout.Children.Add(missedWord);
+                        }
+                    }
+                    tmp = tmpW[1];
+                }
+
                 JObject wordValues = (JObject)words[word];
                 
                 wordLayout = new VerticalStackLayout();
                 
+                //Word tap event
                 TapGestureRecognizer wordTap = new TapGestureRecognizer();
                 TappedEventArgs wordArgs = new TappedEventArgs(wordValues);
                 wordTap.Tapped += (sender, _) => OnTapped(sender, wordArgs, word);
                 wordLayout.GestureRecognizers.Add(wordTap);
                 
+                //Add the word label
                 wordLayout.Children.Add(new Label
                 {
                     BackgroundColor = wordColor,
@@ -76,12 +132,14 @@ public partial class SentenceView : ContentView
                 
                 phraseLayout.Children.Add(wordLayout);
             }
-            
             sentenceLayout.Children.Add(phraseLayout);
         }
         SentencePanel.Children.Add(sentenceLayout);
         
         OnTapped(sentenceLayout, sentenceArgs,"Sentence");
+        
+        //force rerender 
+        InvalidateMeasure();
 
         if(WordManager.Instance.Sentences.Any(s => s.Text == sentence))
         {

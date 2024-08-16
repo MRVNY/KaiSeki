@@ -22,19 +22,19 @@
             <!-- <ShellContent ContentTemplate="{DataTemplate views:CatsPage}" /> -->
         </Tab>
         
-        <Tab Title="Words" Icon="da.png">
+        <Tab Title="History" Icon="da.png">
             <ShellContent
                 Title="Words"
                 ContentTemplate="{DataTemplate local:ListPage}"
                 Route="WordsPage" />
         </Tab>
         
-        <Tab Title="Study" Icon="be.png">
-            <ShellContent
-                Title="Study"
-                ContentTemplate="{DataTemplate local:StudyPage}"
-                Route="StudyPage" />
-        </Tab>
+        <!-- <Tab Title="Study" Icon="be.png"> -->
+        <!--     <ShellContent -->
+        <!--         Title="Study" -->
+        <!--         ContentTemplate="{DataTemplate local:StudyPage}" -->
+        <!--         Route="StudyPage" /> -->
+        <!-- </Tab> -->
     </TabBar>
 
 </Shell>

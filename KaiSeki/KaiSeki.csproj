@@ -87,13 +87,16 @@
       <MauiXaml Update="XAML\AnalyzerPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="XAML\StudyPage.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
-      <MauiXaml Update="XAML\WordPage.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
       <MauiXaml Update="App.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Trash\StudyPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Trash\WordPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="XAML\SentencePage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
     </ItemGroup>
@@ -111,16 +114,20 @@
         <DependentUpon>MainPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="XAML\StudyPage.xaml.cs">
+      <Compile Update="App.xaml.cs">
+        <DependentUpon>App.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Trash\StudyPage.xaml.cs">
         <DependentUpon>StudyPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="XAML\WordPage.xaml.cs">
+      <Compile Update="Trash\WordPage.xaml.cs">
         <DependentUpon>WordPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="App.xaml.cs">
-        <DependentUpon>App.xaml</DependentUpon>
+      <Compile Update="XAML\SentencePage.xaml.cs">
+        <DependentUpon>SentencePage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
