@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 public class Sentence
 {
     public string Text { get; set; }
+    public DateTime Date { get; set; }
     // public string Translation { get; set; }
     // public string Grammar { get; set; }
     //
@@ -15,5 +16,6 @@ public class Sentence
     {
         Text = jObject.Properties().First().Name;
         JObject = jObject;
+        Date = DateTime.Now;
     }
 }

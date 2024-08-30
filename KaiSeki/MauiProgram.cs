@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
+using MauiIcons.Cupertino;
 using Microsoft.Maui.LifecycleEvents;
 
 namespace KaiSeki;
@@ -15,6 +16,7 @@ public static class MauiProgram
             fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
         })
             .UseMauiCommunityToolkit()
+            .UseCupertinoMauiIcons()
             .ConfigureLifecycleEvents(events =>
             {
 #if IOS

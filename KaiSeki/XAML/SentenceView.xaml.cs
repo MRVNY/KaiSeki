@@ -141,12 +141,12 @@ public partial class SentenceView : ContentView
         //force rerender 
         InvalidateMeasure();
 
-        if(WordManager.Instance.Sentences.Any(s => s.Text == sentence))
+        if(SentenceManager.Instance.Sentences.Any(s => s.Text == sentence))
         {
             return;
         }
-        WordManager.Instance.Sentences.Insert(0,new Sentence(jObject));
-        WordManager.Instance.Save();
+        SentenceManager.Instance.Sentences.Insert(0,new Sentence(jObject));
+        SentenceManager.Instance.Save();
     }
     
     public void Clear()

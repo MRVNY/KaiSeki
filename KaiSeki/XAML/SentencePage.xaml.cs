@@ -1,3 +1,5 @@
+using MauiIcons.Core;
+
 namespace KaiSeki.XAML;
 
 public partial class SentencePage : ContentPage
@@ -5,6 +7,7 @@ public partial class SentencePage : ContentPage
     public SentencePage()
     {
         InitializeComponent();
+        _ = new MauiIcon();
         NavigationPage.SetHasNavigationBar(this, false);
     }
     

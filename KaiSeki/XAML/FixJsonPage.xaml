@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KaiSeki.XAML.FixJsonPage">
+    <ContentPage.Content>
+        <Grid
+            Padding="0"
+            ColumnDefinitions="*,*"
+            RowDefinitions="*,Auto">
+            
+           <!-- <ScrollView> -->
+           <!--     <Grid -->
+           <!--         ColumnDefinitions="Auto,*"> -->
+           <!--     ~1~ <Label TextType="Html" WidthRequest="20" x:Name="LineNumbers" FontSize="15"/> @1@ -->
+           <!--   -->
+           <!--     <Editor Grid.Column="1" -->
+           <!--             x:Name="Editor" FontSize="15"/> -->
+           <!--     </Grid> -->
+           <!-- </ScrollView> -->
+            
+           <Editor Grid.ColumnSpan="2" x:Name="Editor" FontSize="15"/>
+            
+           <Grid Grid.Row="1" Margin="5" ColumnSpacing="5" ColumnDefinitions="3*,*">
+               <Button Text="Go to line" Clicked="GoToLine" />
+               <Picker x:Name="LinePicker" Grid.Column="1"/>
+           </Grid>
+           
+            <Button Grid.Row="1" Grid.Column="1"
+                Text="Confirm"
+                Margin="5"
+                Clicked="Button_OnClicked"></Button>
+        </Grid>
+        
+        
+        
+    </ContentPage.Content>
+</ContentPage>

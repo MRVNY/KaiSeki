@@ -24,17 +24,17 @@
         
         <Tab Title="History" Icon="da.png">
             <ShellContent
-                Title="Words"
+                Title="History"
                 ContentTemplate="{DataTemplate local:ListPage}"
                 Route="WordsPage" />
         </Tab>
         
-        <!-- <Tab Title="Study" Icon="be.png"> -->
-        <!--     <ShellContent -->
-        <!--         Title="Study" -->
-        <!--         ContentTemplate="{DataTemplate local:StudyPage}" -->
-        <!--         Route="StudyPage" /> -->
-        <!-- </Tab> -->
+        <Tab Title="Study" Icon="be.png">
+            <ShellContent
+                Title="Settings"
+                ContentTemplate="{DataTemplate local:SettingsPage}"
+                Route="SettingsPage" />
+        </Tab>
     </TabBar>
 
 </Shell>

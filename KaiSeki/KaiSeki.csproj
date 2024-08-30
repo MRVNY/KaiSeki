@@ -62,6 +62,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="AathifMahir.Maui.MauiIcons.Cupertino" Version="3.0.0" />
         <PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
         <PackageReference Include="CommunityToolkit.Maui.Core" Version="9.0.0" />
         <PackageReference Include="JishoNET" Version="1.3.1" />
@@ -78,9 +79,6 @@
     </ItemGroup>
     
     <ItemGroup>
-      <MauiXaml Update="XAML\AppShell.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
       <MauiXaml Update="XAML\ListPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
@@ -90,22 +88,21 @@
       <MauiXaml Update="App.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
-      <MauiXaml Update="Trash\StudyPage.xaml">
-        <SubType>Designer</SubType>
-      </MauiXaml>
       <MauiXaml Update="Trash\WordPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
       <MauiXaml Update="XAML\SentencePage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
+      <MauiXaml Update="AppShell.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="XAML\SettingsPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
     </ItemGroup>
     
     <ItemGroup>
-      <Compile Update="XAML\AppShell.xaml.cs">
-        <DependentUpon>AppShell.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
       <Compile Update="XAML\ListPage.xaml.cs">
         <DependentUpon>ListPage.xaml</DependentUpon>
         <SubType>Code</SubType>
@@ -118,16 +115,20 @@
         <DependentUpon>App.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
-      <Compile Update="Trash\StudyPage.xaml.cs">
-        <DependentUpon>StudyPage.xaml</DependentUpon>
-        <SubType>Code</SubType>
-      </Compile>
       <Compile Update="Trash\WordPage.xaml.cs">
         <DependentUpon>WordPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
       <Compile Update="XAML\SentencePage.xaml.cs">
         <DependentUpon>SentencePage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="AppShell.xaml.cs">
+        <DependentUpon>AppShell.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="XAML\SettingsPage.xaml.cs">
+        <DependentUpon>StudyPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>

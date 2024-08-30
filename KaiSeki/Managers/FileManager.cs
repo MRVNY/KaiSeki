@@ -57,4 +57,14 @@ public class FileManager
         Console.WriteLine(text);
     }
     
+    void BackupFile(string path)
+    {
+        File.Copy(path, Path.Combine(docDir, Path.GetFileName(path)));
+    }
+    
+    void RestoreFile(string path)
+    {
+        File.Copy(Path.Combine(docDir, Path.GetFileName(path)), path);
+    }
+    
 }
