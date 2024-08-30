@@ -47,9 +47,6 @@ public partial class FixJsonPage : ContentPage
             //show line on LinePicker
             LinePicker.SelectedItem = line.ToString();
         }
-
-        //send string back
-
     }
 
     private void GoToLine(object? sender, EventArgs e)

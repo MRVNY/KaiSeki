@@ -9,6 +9,7 @@ public partial class SettingsPage : ContentPage
     public SettingsPage()
     {
         InitializeComponent();
+        NavigationPage.SetHasNavigationBar(this, false);
     }
 
     private void OnRestore(object? sender, EventArgs e)

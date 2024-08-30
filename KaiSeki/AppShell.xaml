@@ -18,7 +18,7 @@
             <ShellContent
                 Title="Analyzer"
                 ContentTemplate="{DataTemplate local:AnalyzerPage}"
-                Route="MainPage" />
+                Route="AnalyzerPage" />
             <!-- <ShellContent ContentTemplate="{DataTemplate views:CatsPage}" /> -->
         </Tab>
         
@@ -26,10 +26,10 @@
             <ShellContent
                 Title="History"
                 ContentTemplate="{DataTemplate local:ListPage}"
-                Route="WordsPage" />
+                Route="HistoryPage" />
         </Tab>
         
-        <Tab Title="Study" Icon="be.png">
+        <Tab Title="Settings" Icon="be.png">
             <ShellContent
                 Title="Settings"
                 ContentTemplate="{DataTemplate local:SettingsPage}"
