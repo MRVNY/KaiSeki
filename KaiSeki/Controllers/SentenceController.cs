@@ -1,14 +1,22 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Storage;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using Newtonsoft.Json;
 
 namespace KaiSeki;
 
-public class SentenceManager
+public class SentenceController
 {
-    public static SentenceManager Instance;
+    public static SentenceController Instance;
 
     private IEnumerable<char> romaji;
     private IEnumerable<char> hiragana;
@@ -19,12 +27,9 @@ public class SentenceManager
     
     public List<Sentence> Sentences { get; set; }
     
-    public SentenceManager()
+    public SentenceController()
     {
-        // romaji = GetCharsInRange(searchKeyword, 0x0020, 0x007E);
-        // hiragana = GetCharsInRange(searchKeyword, 0x3040, 0x309F);
-        // katakana = GetCharsInRange(searchKeyword, 0x30A0, 0x30FF);
-        // kanji = GetCharsInRange(searchKeyword, 0x4E00, 0x9FBF);
+        if(!File.Exists(appSupDir)) Directory.CreateDirectory(appSupDir);
 
         if(File.Exists(Path.Combine(appSupDir, "sentences.json")))
         {

@@ -407,3 +407,9 @@ ASALocalRun/
 *.DS_Store
 *Keys.json
 .vscode/
+edge_functions/
+supabase/
+Trash/
+ipa_hosting/
+
+*.mobileprovision

@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xaml="clr-namespace:KaiSeki.XAML"
-             xmlns:icons="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="KaiSeki.AnalyzerPage">
     
     <!-- <ContentPage.ToolbarItems> -->

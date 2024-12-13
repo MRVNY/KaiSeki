@@ -13,7 +13,7 @@
     <!--     ContentTemplate="{DataTemplate local:MainPage}" -->
     <!--     Route="MainPage" /> -->
     
-    <TabBar>
+    <TabBar x:Name="TabBar">
         <Tab Title="Analyzer" Icon="ka.png">
             <ShellContent
                 Title="Analyzer"

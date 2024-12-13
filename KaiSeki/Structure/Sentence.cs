@@ -1,4 +1,6 @@
 
+using System;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 
 public class Sentence

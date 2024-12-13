@@ -1,37 +1,36 @@
-﻿using KaiSeki.XAML;
-using MauiIcons.Core;
+﻿using System;
+using System.Threading.Tasks;
+using KaiSeki.XAML;
+// using MauiIcons.Core;
+using Microsoft.Maui.ApplicationModel.DataTransfer;
+using Microsoft.Maui.Controls;
 using Newtonsoft.Json.Linq;
 
 namespace KaiSeki;
 
 
-public partial class AnalyzerPage : ContentPage
+public partial class AnalyzerPage
 {
     public static AnalyzerPage Instance;
-    private GeminiManager _geminiManager;
     private Task parsing;
     private JObject jObject;
+    private DateTime timer;
 
     public AnalyzerPage()
     {
         InitializeComponent();
-        _ = new MauiIcon();
-        
         this.Loaded += MainPage_Loaded;
         
-        NavigationPage.SetHasNavigationBar(this, false);
+        // NavigationPage.SetHasNavigationBar(this, false);
 
         // SentenceView.IsVisible = false;
-        _geminiManager = new GeminiManager();
-        // BuildSentencePanel(_geminiManager.GetExample());
-        // Appearing += GetClipboard;
-        // NavigatedTo += GetClipboard;
         
-        Instance = this;
+        // BuildSentencePanel(_geminiManager.GetExample());
     }
 
     private async void MainPage_Loaded(object sender, EventArgs e)
     {
+        Instance = this;
         // SentenceView.BuildSentence(_geminiManager.GetExample());
     }
     
@@ -60,13 +59,30 @@ public partial class AnalyzerPage : ContentPage
             SentenceEntry.Text = "日本語の解析します。";
         }
         
+        //null of empty
+        if(GeminiController.UseGeminiAPI && GeminiController.GetGeminiKey()=="")
+        {
+            bool publicKey = await DisplayAlert("Gemini API Key", "The public API key is available for everyone to use, but it is slow and the number of requests might be limited. Would you like to use your own Gemini API key (Free tier available on Google's website)? You can change this preference in settings.", "No, I'll use the public key", "Yes, I'd like to use my own key");
+            
+            //go to tab SettingsPage
+            if (!publicKey)
+            {
+                AppShell.Instance.SetTab(2);
+                return;
+            }
+            GeminiController.SetUseGeminiAPI(false);
+        }
+        
         Indicator.IsVisible = true;
         Indicator.IsRunning = true;
         LabelScroll.IsVisible = false;
         // SentenceView.IsVisible = false;
         SentenceView.Clear();
+
+        string result;
+        if(GeminiController.GetGeminiKey()=="") result = await GeminiController.PrivateAPI(SentenceEntry.Text);
+        else result = await GeminiController.PublicAPI(SentenceEntry.Text);
         
-        string result = await _geminiManager.RESTAsk(SentenceEntry.Text);
         Indicator.IsVisible = false;
         jObject = null;
         
@@ -77,11 +93,12 @@ public partial class AnalyzerPage : ContentPage
         }
         catch (Exception ex)
         {
-            SmallLabel.Text = "Failed, trying one more time \n" + ex.Message;
+            SmallLabel.Text = "Failed, trying one more time \n" + ex.Message + "\n" + result;
             LabelScroll.IsVisible = true;
             Indicator.IsVisible = true;
 
-            result = await _geminiManager.RESTAsk(SentenceEntry.Text);
+            if(GeminiController.GetGeminiKey()=="") result = await GeminiController.PrivateAPI(SentenceEntry.Text);
+            else result = await GeminiController.PublicAPI(SentenceEntry.Text);
             
             Indicator.IsVisible = false;
             LabelScroll.IsVisible = false;
@@ -96,7 +113,7 @@ public partial class AnalyzerPage : ContentPage
             catch (Exception exception)
             {
                 LabelScroll.IsVisible = true;
-                SmallLabel.Text = "Failed \n" + exception.Message;
+                SmallLabel.Text = "Failed \n" + exception.Message + "\n" + result;
                 
                 bool ask = await DisplayAlert("Fixer", "Would you like to manually fix the error?", "Yes", "No");
                 if(ask && result!=null) Navigation.PushAsync(new FixJsonPage(result));
@@ -140,17 +157,5 @@ public partial class AnalyzerPage : ContentPage
     {
         SentenceEntry.Unfocus();
     }
-
-    // private void OnMenuClicked(object? sender, EventArgs e)
-    // {
-    //     //open menu
-    //    
-    //     //open menu
-    //     AppShell.Instance.MenuBarItems.Add(new MenuBarItem()
-    //     {
-    //         Text = "Clear",
-    //
-    //     });
-    // }
 }
 

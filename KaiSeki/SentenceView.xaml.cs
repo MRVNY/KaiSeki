@@ -1,10 +1,15 @@
+using System;
+using System.Linq;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 using Newtonsoft.Json.Linq;
 
 namespace KaiSeki.XAML;
 
-public partial class SentenceView : ContentView
+public partial class SentenceView
 {
     private Color wordColor = Color.FromArgb("#512BD4");
     private Color sentenceColor = Color.FromArgb("#DFD8F7");
@@ -141,12 +146,12 @@ public partial class SentenceView : ContentView
         //force rerender 
         InvalidateMeasure();
 
-        if(SentenceManager.Instance.Sentences.Any(s => s.Text == sentence))
+        if(SentenceController.Instance.Sentences.Any(s => s.Text == sentence))
         {
             return;
         }
-        SentenceManager.Instance.Sentences.Insert(0,new Sentence(jObject));
-        SentenceManager.Instance.Save();
+        SentenceController.Instance.Sentences.Insert(0,new Sentence(jObject));
+        SentenceController.Instance.Save();
     }
     
     public void Clear()

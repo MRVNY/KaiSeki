@@ -1,6 +1,8 @@
-﻿namespace KaiSeki;
+﻿using Microsoft.Maui.Controls;
 
-public partial class AppShell : Shell
+namespace KaiSeki;
+
+public partial class AppShell
 {
     public static AppShell Instance;
     public AppShell()
@@ -9,5 +11,10 @@ public partial class AppShell : Shell
         InitializeComponent();
         
         NavigationPage.SetHasNavigationBar(this, false);
+    }
+    
+    public void SetTab(int index)
+    {
+        TabBar.CurrentItem = TabBar.Items[index];
     }
 }

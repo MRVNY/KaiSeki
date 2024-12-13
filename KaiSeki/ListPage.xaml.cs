@@ -1,4 +1,6 @@
-﻿using KaiSeki.XAML;
+﻿using System;
+using KaiSeki.XAML;
+using Microsoft.Maui.Controls;
 using Newtonsoft.Json.Linq;
 
 namespace KaiSeki;
@@ -10,9 +12,9 @@ public partial class ListPage : ContentPage
     {
         InitializeComponent();
         NavigationPage.SetHasNavigationBar(this, false);
-        list.ItemsSource = SentenceManager.Instance.Sentences;
+        list.ItemsSource = SentenceController.Instance.Sentences;
         List_OnRefreshing(null,null);
-        NavigatedTo += (sender, args) => list.ItemsSource = SentenceManager.Instance.Sentences;
+        NavigatedTo += (sender, args) => list.ItemsSource = SentenceController.Instance.Sentences;
     }
 
     private void List_OnItemTapped(object? sender, ItemTappedEventArgs itemTappedEventArgs)
@@ -27,7 +29,7 @@ public partial class ListPage : ContentPage
     private void List_OnRefreshing(object? sender, EventArgs e)
     {
         list.ItemsSource = null;
-        list.ItemsSource =  SentenceManager.Instance.Refresh();
+        list.ItemsSource =  SentenceController.Instance.Refresh();
         InvalidateMeasure();
         list.EndRefresh();
     }
@@ -36,7 +38,7 @@ public partial class ListPage : ContentPage
     {
         SwipeItem swipeItem = (SwipeItem) sender;
         Sentence sentence = swipeItem.BindingContext as Sentence;
-        SentenceManager.Instance.Sentences.Remove(sentence);
+        SentenceController.Instance.Sentences.Remove(sentence);
         List_OnRefreshing(null,null);
     }
 }

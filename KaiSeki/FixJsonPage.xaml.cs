@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Maui.Alerts;
+using Microsoft.Maui.Controls;
 using Newtonsoft.Json.Linq;
 
 namespace KaiSeki.XAML;
